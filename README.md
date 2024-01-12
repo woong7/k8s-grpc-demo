@@ -1,29 +1,45 @@
-# gRPC Hello World
+# gRPC k8s Demo
+            
+## 1. For gRPC server-client connection test
+     
+To run the gRPC server,
+```shell
+go run greeter_server/main.go
+```
 
-Follow these setup to run the [quick start][] example:
+To run the gRPC client, 
+open the another terminal, and
+```shell
+go run greeter_client/main.go
+```
+![img.png](img.png)
 
- 1. Get the code:
+If you can see this response, it is succeed. 
 
-    ```console
-    $ go get google.golang.org/grpc/examples/helloworld/greeter_client
-    $ go get google.golang.org/grpc/examples/helloworld/greeter_server
-    ```
+## 2. Deploying gRPC server on the k8s cluster using Minikube
 
- 2. Run the server:
+Sorry but I just skip the details for installing **minikube**.
 
-    ```console
-    $ $(go env GOPATH)/bin/greeter_server &
-    ```
+To deploy the gRPC server on the k8s cluster, follow the steps below.
 
- 3. Run the client:
+1. Turn on the docker desktop
+2. `minikube start`
+3. `kubectl apply -f grpc-deployment.yaml`
+4. `kubectl apply -f grpc-service.yaml`
+5. `kubectl apply -f grpc-ingress.yaml`
+6. `minikube addons enable ingress`
 
-    ```console
-    $ $(go env GOPATH)/bin/greeter_client
-    Greeting: Hello world
-    ```
+Then you can check the pods are running with the command `kubectl get pods -o wide` command. 
 
-For more details (including instructions for making a small change to the
-example code) or if you're having trouble running this example, see [Quick
-Start][].
+To see the dashboard, activate the dashboard plugin with `minikube addons enable dashboard`, 
+then type `minikube dashboard` to launch the dashboard.
 
-[quick start]: https://grpc.io/docs/languages/go/quickstart
+## Test the gRPC connection
+After 30~60 sec you apply the ingress, you can see the ingress ip address with `kubectl get ingress` command. With this IP address, you can send the gRPC request. 
+
+1. Postman
+![img_1.png](img_1.png)
+Open the postman desktop application, import the proto file in the `helloworld` directory. 
+
+2. client
+Open the `greeter_client/main.go` file, and edit the `localhost` to your ingress IP.
