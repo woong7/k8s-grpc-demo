@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-demo-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grpc-demo
+  template:
+    metadata:
+      labels:
+        app: grpc-demo
+    spec:
+      containers:
+      - name: grpc-server
+        image: alcherasheldon/ubuntu-grpc-server:latest # 예시 이미지, 실제 gRPC 서버 이미지로 변경 필요
+        ports:
+        - containerPort: 50051 # gRPC 서버의 포트
+

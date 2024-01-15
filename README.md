@@ -43,7 +43,11 @@ brew install helm
 
 Then you can deploy the gRPC server on the k8s cluster with following simple command.
 ```shell
+## Mac
 helm install ${release name} ./grpc-demo-helm
+
+## Ubuntu
+helm install ${release name} ./grpc-demo-helm-ubuntu
 
 ## example
 helm install grpc-demo-release ./grpc-demo-helm
@@ -64,7 +68,12 @@ helm upgrade ${new-release-name} ./grpc-demo-helm
 helm uninstall ${release name}
 ```
 
-## Test the gRPC connection
+## Test the gRPC connection (MacOS)
+First, you should open minikube tunnel with following command. 
+```shell
+minikube tunnel
+```
+
 After 30~60 sec you apply the ingress, you can see the ingress ip address with `kubectl get ingress` command. 
 But you can send the gRPC request with `127.0.0.1` local ip address.
 
@@ -77,3 +86,27 @@ You can also send the request with `greeter_client/main.go` client.
 ```shell
 go run greeter_client/main.go
 ```
+
+## Test the gRPC connection (Ubuntu)
+First, you should open minikube tunnel with following command.
+```shell
+minikube tunnel
+```
+
+Then, obtain your LoadBalancer's external ip with following command. 
+-> If you didn't turn on minikube tunnel, it will be shown as `<pending>`. 
+```shell
+kubectl get svc
+```
+![img_1.png](img_1.png)
+
+Install `gRPCurl` with following command.
+```shell
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+```
+
+Then you can check the gRPC connection with following command. 
+```shell
+grpcurl -plaintext -proto helloworld/helloworld.proto ${External IP of LB}:50051 helloworld.Greeter.SayHello
+```
+Of course you can test connection using `greeter_clinet/main.go`, but you have to edit the IP address. 
