@@ -25,3 +25,4 @@ COPY --from=builder /app/server .
 # 서버 실행
 CMD ["./server"]
 
+EXPOSE 50051
