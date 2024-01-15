@@ -34,6 +34,36 @@ Then you can check the pods are running with the command `kubectl get pods -o wi
 To see the dashboard, activate the dashboard plugin with `minikube addons enable dashboard`, 
 then type `minikube dashboard` to launch the dashboard.
 
+## 3. Deploying with Helm
+- Assuming that you already have `homebrew` package manager. 
+- You can easily install `helm` with simple shell command 
+```shell
+brew install helm
+```
+
+Then you can deploy the gRPC server on the k8s cluster with following simple command.
+```shell
+helm install ${release name} ./grpc-demo-helm
+
+## example
+helm install grpc-demo-release ./grpc-demo-helm
+```
+
+- Check if the helm is deployed
+```shell
+helm ls
+```
+
+- Helm upgrade
+```shell
+helm upgrade ${new-release-name} ./grpc-demo-helm
+```
+
+- Helm Delete
+```shell
+helm uninstall ${release name}
+```
+
 ## Test the gRPC connection
 After 30~60 sec you apply the ingress, you can see the ingress ip address with `kubectl get ingress` command. 
 But you can send the gRPC request with `127.0.0.1` local ip address.
