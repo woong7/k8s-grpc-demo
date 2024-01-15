@@ -35,11 +35,15 @@ To see the dashboard, activate the dashboard plugin with `minikube addons enable
 then type `minikube dashboard` to launch the dashboard.
 
 ## Test the gRPC connection
-After 30~60 sec you apply the ingress, you can see the ingress ip address with `kubectl get ingress` command. With this IP address, you can send the gRPC request. 
+After 30~60 sec you apply the ingress, you can see the ingress ip address with `kubectl get ingress` command. 
+But you can send the gRPC request with `127.0.0.1` local ip address.
 
 1. Postman
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 Open the postman desktop application, import the proto file in the `helloworld` directory. 
 
 2. client
-Open the `greeter_client/main.go` file, and edit the `localhost` to your ingress IP.
+You can also send the request with `greeter_client/main.go` client. 
+```shell
+go run greeter_client/main.go
+```
