@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-demo-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grpc-demo
+  template:
+    metadata:
+      labels:
+        app: grpc-demo
+    spec:
+      containers:
+        - name: grpc-server
+          image: wf-smoke-inference-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9000
+          env:
+            - name: PORT
+              value: "9000"
+            - name: SDK_CONF_PATH
+              value: "/workspace/models/sdk_config.json"
+            - name: INFERENCE_BUFFER_SIZE
+              value: "7"
+          volumeMounts:
+            - name: model-volume
+              mountPath: "/workspace/models"
+      volumes:
+        - name: model-volume
+          hostPath:
+            path: /mounttest-minikube
+            type: Directory
