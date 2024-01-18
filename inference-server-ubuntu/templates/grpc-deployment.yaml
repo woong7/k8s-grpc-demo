@@ -33,3 +33,5 @@ spec:
           hostPath:
             path: /mounttest-minikube
             type: Directory
+      imagePullSecrets:
+        - name: ecr-secret
