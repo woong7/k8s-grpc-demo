@@ -31,7 +31,7 @@ spec:
       volumes:
         - name: model-volume
           hostPath:
-            path: /mounttest-minikube
+            path: /home/ubuntu/WF-inference-server/dependencies
             type: Directory
       imagePullSecrets:
         - name: ecr-secret
