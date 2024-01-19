@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: grpc-server
-          image: wf-smoke-inference-server:latest
+          image: 490170244458.dkr.ecr.us-west-2.amazonaws.com/wf-smoke-inference-server:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9000
